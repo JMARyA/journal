@@ -7,12 +7,14 @@ use std::path::Path;
 
 pub fn get_document_path() -> String {
     // Check for environment variable
+    // ROOT PATH -> $JOURNAL_DIR/Journal
     let doc = var("JOURNAL_DIR");
     if doc.is_ok() {
         return doc.ok().unwrap();
     }
 
     // Check for user document folder
+    // ROOT PATH -> $HOME/Documents/Journal
     let user_dirs = UserDirs::new();
     let user_dirs = user_dirs.unwrap();
     let doc = user_dirs.document_dir();
@@ -23,12 +25,14 @@ pub fn get_document_path() -> String {
     }
 
     // Check for XDG Config Dir
+    // ROOT PATH -> $XDG_CONFIG_HOME/Journal
     let doc = var("XDG_CONFIG_HOME");
     if doc.is_ok() {
         return doc.ok().unwrap();
     }
 
     // Manual XDG Config Dir
+    // ROOT PATH -> $HOME/.config/Journal
     let home = var("HOME");
     let doc = Path::new(&home.unwrap()).join(".config").to_str().unwrap().to_string();
     return doc;
