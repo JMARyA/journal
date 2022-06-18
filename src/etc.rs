@@ -66,6 +66,10 @@ pub fn binary_exists(bin: &str) -> bool {
     return exists != "";
 }
 
+pub fn ensure_parents_exist(path: String) {
+    let _ = fs::create_dir_all(Path::new(&path).parent().unwrap());
+}
+
 /// Ensure journal directories exist
 pub fn ensure_dirs() {
     let _ = fs::create_dir_all(format!("{}/Journal/Notes", get_document_path()));

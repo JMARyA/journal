@@ -9,6 +9,7 @@ pub fn write_journal(note: Option<&str>) {
         // Open Note
         note_path = format!("{}/Notes/{}.md", etc::journal_dir(), note.unwrap());
     }
+    etc::ensure_parents_exist(note_path.to_string());
 
     // Open Editor
     Command::new(var("EDITOR").ok().unwrap_or_else(|| "nano".to_string()))
